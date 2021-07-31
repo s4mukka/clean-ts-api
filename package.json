@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "sucrase-node src/main/server.ts",
-    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test": "jest --passWithNoTests --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests",
     "test:unit": "yarn test -- --watch -c jest-unit-config.js",
     "test:integration": "yarn test -- --watch -c jest-integration-config.js",
@@ -33,7 +33,7 @@
     "jest": "^27.0.6",
     "lint-staged": "^11.1.1",
     "sucrase": "^3.20.0",
-    "supertest": "^6.1.4",
+    "supertest": "^6.0.1",
     "ts-jest": "^27.0.4",
     "typescript": "^4.3.5"
   },
