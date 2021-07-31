@@ -3,5 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "Samuel Pereira <meninosam197@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "git-commit-msg-linter": "^3.2.6"
+  }
 }
