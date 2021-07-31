@@ -5,5 +5,9 @@ module.exports = {
   testEnvironment: 'node',
   transform: {
     '.*\\.ts$': 'ts-jest'
-  }
+  },
+  collectCoverageFrom: [
+    "!src/presentation/protocols/**",
+    "!src/presentation/controllers/signup/protocols.ts"
+  ],
 }
