@@ -5,8 +5,8 @@
   "author": "Samuel Pereira <meninosam197@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "jest --passWithNoTests",
-    "test:staged": "jest --passWithNoTests"
+    "test": "jest",
+    "test:staged": "jest"
   },
   "devDependencies": {
     "@types/jest": "^26.0.24",
