@@ -1,22 +1,28 @@
 import { Collection, MongoClient } from 'mongodb'
 
-class MongoHelper {
-  client: MongoClient
+export const MongoHelper = {
+  client: null as MongoClient,
+  url: null as string,
 
   async connect (url: string): Promise<void> {
+    this.url = url
     this.client = await MongoClient.connect(url, {
       useNewUrlParser: true,
       useUnifiedTopology: true
     })
-  }
+  },
 
   async disconnect (): Promise<void> {
-    await this.client.close()
-  }
+    await (this.client as MongoClient).close()
+  },
 
-  getCollection (name: string): Collection {
-    return this.client.db().collection(name)
-  }
+  async getCollection (name: string): Promise<Collection> {
+    if (!this.client || !(this.client as MongoClient).isConnected()) {
+      await this.connect(this.url)
+    }
+
+    return (this.client as MongoClient).db().collection(name)
+  },
 
   map (collection: any): any {
     const { _id, ...collectionWithoutId } = collection
@@ -27,5 +33,3 @@ class MongoHelper {
     }
   }
 }
-
-export default new MongoHelper()
