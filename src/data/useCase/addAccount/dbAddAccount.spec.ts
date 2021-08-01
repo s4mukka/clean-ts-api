@@ -89,7 +89,7 @@ describe('DbAddAccount UseCase', () => {
 
     await sut.add(accountData)
 
-    await expect(addSpy).toHaveBeenCalledWith({
+    expect(addSpy).toHaveBeenCalledWith({
       name: 'valid_name',
       email: 'valid_email@mail.com',
       password: 'hashed_password'
@@ -122,7 +122,7 @@ describe('DbAddAccount UseCase', () => {
 
     const account = await sut.add(accountData)
 
-    await expect(account).toEqual({
+    expect(account).toEqual({
       id: 'valid_id',
       name: 'valid_name',
       email: 'valid_email@mail.com',

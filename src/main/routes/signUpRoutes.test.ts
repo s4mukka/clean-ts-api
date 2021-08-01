@@ -1,6 +1,6 @@
 import request from 'supertest'
 
-import MongoHelper from '../../infra/db/mongodb/helpers/mongoHelper'
+import { MongoHelper } from '../../infra/db/mongodb/helpers/mongoHelper'
 import app from '../config/app'
 
 describe('SignUp Routes', () => {
@@ -13,7 +13,7 @@ describe('SignUp Routes', () => {
   })
 
   beforeEach(async () => {
-    const accountCollection = MongoHelper.getCollection('accounts')
+    const accountCollection = await MongoHelper.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
 
