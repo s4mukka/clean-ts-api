@@ -6,6 +6,7 @@ module.exports = {
     '!<rootDir>/src/@types/**',
     '!<rootDir>/src/presentation/protocols/**',
     '!<rootDir>/src/presentation/controllers/signup/protocols.ts',
+    '!<rootDir>/src/presentation/controllers/login/protocols.ts',
     '!<rootDir>/src/data/useCase/addAccount/protocols.ts'
   ],
   coverageDirectory: 'coverage',
