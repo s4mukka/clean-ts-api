@@ -15,6 +15,9 @@
     "test:staged": "yarn test --findRelatedTests",
     "test:ci": "yarn test --coverage"
   },
+  "engines": {
+    "node": "14.x"
+  },
   "devDependencies": {
     "@shelf/jest-mongodb": "^2.0.1",
     "@types/bcrypt": "^5.0.0",
