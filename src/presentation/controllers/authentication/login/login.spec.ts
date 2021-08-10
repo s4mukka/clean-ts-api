@@ -1,8 +1,8 @@
-import { MissingParamError } from '../../errors'
-import { badRequest, ok, serverError, unauthorized } from '../../helpers/http/httpHelper'
+import { MissingParamError } from '../../../errors'
+import { badRequest, ok, serverError, unauthorized } from '../../../helpers/http/httpHelper'
 import { HttpRequest, Authentication, Validation } from './protocols'
 import { LoginController } from './login'
-import { AuthenticationModel } from '../../../domain/useCases/authentication'
+import { AuthenticationModel } from '../../../../domain/useCases/authentication'
 
 const makeValidation = (): Validation => {
   class ValidationStub implements Validation {
