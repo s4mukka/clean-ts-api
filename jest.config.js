@@ -5,10 +5,7 @@ module.exports = {
     '!<rootDir>/src/main/**',
     '!<rootDir>/src/@types/**',
     '!<rootDir>/src/presentation/protocols/**',
-    '!<rootDir>/src/presentation/controllers/signup/protocols.ts',
-    '!<rootDir>/src/presentation/controllers/login/protocols.ts',
-    '!<rootDir>/src/data/useCase/addAccount/protocols.ts',
-    '!<rootDir>/src/data/useCase/dbAuthentication/protocols.ts'
+    '!**/protocols.ts'
   ],
   coverageDirectory: 'coverage',
   testEnvironment: 'node',
