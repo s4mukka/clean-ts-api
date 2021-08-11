@@ -1,7 +1,7 @@
 import { LoginController } from '../../../../../presentation/controllers/authentication/login/login'
 import { Controller } from '../../../../../presentation/protocols'
 import { makeLoginValidation } from './loginValidation'
-import { makeDbAuthentication } from '../../../useCases/authentication/dbAuthentication'
+import { makeDbAuthentication } from '../../../useCases/account/authentication/dbAuthentication'
 import { makeLogControllerDecorator } from '../../../decorators/logController'
 
 export const makeLoginController = (): Controller => {
