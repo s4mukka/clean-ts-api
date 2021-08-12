@@ -1,6 +1,6 @@
 import { Controller } from '../../../../../presentation/protocols'
 import { makeLogControllerDecorator } from '../../../decorators/logController'
-import { AddSurveyController } from '../../../../../presentation/controllers/survey/addSurvey'
+import { AddSurveyController } from '../../../../../presentation/controllers/survey/addSurvey/addSurvey'
 import { makeAddSurveyValidation } from './addSurveyValidation'
 import { makeDbAddSurvey } from '../../../useCases/survey/addSurvey/dbAddSurvey'
 

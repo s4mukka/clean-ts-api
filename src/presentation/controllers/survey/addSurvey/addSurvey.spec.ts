@@ -1,5 +1,5 @@
 import { HttpRequest, Validation, AddSurvey, AddSurveyModel } from './protocols'
-import { badRequest, noContent, serverError } from '../../helpers/http/httpHelper'
+import { badRequest, noContent, serverError } from '../../../helpers/http/httpHelper'
 import { AddSurveyController } from './addSurvey'
 
 const makeFakeRequest = (): HttpRequest => ({
