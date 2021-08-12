@@ -5,13 +5,13 @@
         "target": "es2021",
         "esModuleInterop": true,
         "sourceMap": true,
-        "rootDir": "src"
+        "rootDir": "src",
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"]
+        }
     },
     "include": [
         "src"
     ],
-    "exclude": [
-        "**/*.spec.ts",
-        "**/*.test.ts",
-    ]
 }

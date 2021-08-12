@@ -1,7 +1,7 @@
 import MockDate from 'mockdate'
+import { ok, serverError, noContent } from '@/presentation/helpers/http/httpHelper'
 import { LoadSurveysController } from './loadSurveys'
 import { LoadSurveys, SurveyModel } from './protocols'
-import { ok, serverError, noContent } from '../../../helpers/http/httpHelper'
 
 const makeFakeSurveys = (): SurveyModel[] => ([
   {

@@ -1,8 +1,8 @@
-import { SignUpController } from '../../../../../presentation/controllers/authentication/signup/signup'
-import { Controller } from '../../../../../presentation/protocols'
-import { makeLogControllerDecorator } from '../../../decorators/logController'
-import { makeDbAddAccount } from '../../../useCases/account/addAccount/dbAddAccount'
-import { makeDbAuthentication } from '../../../useCases/account/authentication/dbAuthentication'
+import { SignUpController } from '@/presentation/controllers/authentication/signup/signup'
+import { Controller } from '@/presentation/protocols'
+import { makeLogControllerDecorator } from '@/main/factories/decorators/logController'
+import { makeDbAddAccount } from '@/main/factories/useCases/account/addAccount/dbAddAccount'
+import { makeDbAuthentication } from '@/main/factories/useCases/account/authentication/dbAuthentication'
 import { makeSignUpValidation } from './signupValidation'
 
 export const makeSignUpController = (): Controller => {
