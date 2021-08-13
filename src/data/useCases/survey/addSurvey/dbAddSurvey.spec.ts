@@ -1,33 +1,15 @@
 import MockDate from 'mockdate'
-import { AddSurveyParams, AddSurveyRepository } from './protocols'
+import { mockAddSurveyParams, throwError } from '@/domain/test'
+import { AddSurveyRepositoryStub } from '@/data/test'
 import { DbAddSurvey } from './dbAddSurvey'
-
-const makeFakeSurveyData = (): AddSurveyParams => ({
-  question: 'any_question',
-  answers: [{
-    image: 'any_image',
-    answer: 'any_answer'
-  }],
-  date: new Date()
-})
-
-const makeAddSurveyRepository = (): AddSurveyRepository => {
-  class AddSurveyRepositoryStub implements AddSurveyRepository {
-    async add (data: AddSurveyParams): Promise<void> {
-      return new Promise(resolve => resolve(null))
-    }
-  }
-
-  return new AddSurveyRepositoryStub()
-}
 
 type SutTypes = {
   sut: DbAddSurvey
-  addSurveyRepositoryStub: AddSurveyRepository
+  addSurveyRepositoryStub: AddSurveyRepositoryStub
 }
 
 const makeSut = (): SutTypes => {
-  const addSurveyRepositoryStub = makeAddSurveyRepository()
+  const addSurveyRepositoryStub = new AddSurveyRepositoryStub()
   const sut = new DbAddSurvey(addSurveyRepositoryStub)
 
   return {
@@ -48,14 +30,15 @@ describe('DbAddSurvey UseCase', () => {
   test('Should call AddSurveyRepository with correct values', async () => {
     const { sut, addSurveyRepositoryStub } = makeSut()
     const addSpy = jest.spyOn(addSurveyRepositoryStub, 'add')
-    await sut.add(makeFakeSurveyData())
-    expect(addSpy).toHaveBeenCalledWith(makeFakeSurveyData())
+    const surveyParams = mockAddSurveyParams()
+    await sut.add(surveyParams)
+    expect(addSpy).toHaveBeenCalledWith(surveyParams)
   })
 
   test('Should throws if AddSurveyRepository throws', async () => {
     const { sut, addSurveyRepositoryStub } = makeSut()
-    jest.spyOn(addSurveyRepositoryStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
-    const promise = sut.add(makeFakeSurveyData())
+    jest.spyOn(addSurveyRepositoryStub, 'add').mockImplementationOnce(throwError)
+    const promise = sut.add(mockAddSurveyParams())
     await expect(promise).rejects.toThrow()
   })
 })

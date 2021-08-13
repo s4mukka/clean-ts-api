@@ -1,20 +1,35 @@
+import faker from 'faker'
 import { MissingParamError } from '@/presentation/errors'
 import { RequiredFieldValidation } from './requiredFieldValidation'
 
-const makeSut = (): RequiredFieldValidation => {
-  return new RequiredFieldValidation('any_field')
+type SutTypes = {
+  sut: RequiredFieldValidation
+  field: string
+}
+
+const makeSut = (): SutTypes => {
+  const field = faker.random.word()
+  const sut = new RequiredFieldValidation(field)
+
+  return {
+    sut,
+    field
+  }
 }
 
 describe('RequiredField Validation', () => {
   test('Should return a MissingParamError if validation fails', () => {
-    const sut = makeSut()
-    const error = sut.validate({ name: 'any_name' })
+    const { sut, field } = makeSut()
+    const error = sut.validate({ anyField: faker.random.words() })
 
-    expect(error).toEqual(new MissingParamError('any_field'))
+    expect(error).toEqual(new MissingParamError(field))
   })
+
   test('Should not return if validation succeeds', () => {
-    const sut = makeSut()
-    const error = sut.validate({ any_field: 'any_field' })
+    const { sut, field } = makeSut()
+    const input = {}
+    input[field] = faker.random.words()
+    const error = sut.validate(input)
 
     expect(error).toBeFalsy()
   })

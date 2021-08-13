@@ -1,24 +1,15 @@
+import faker from 'faker'
 import { InvalidParamError } from '@/presentation/errors'
-import { EmailValidator } from '@/validation/protocols/emailValidator'
+import { EmailValidatorStub } from '@/validation/test'
 import { EmailValidation } from './emailValidation'
-
-const makeEmailValidator = (): EmailValidator => {
-  class EmailValidatorStub implements EmailValidator {
-    isValid (email: string): boolean {
-      return true
-    }
-  }
-
-  return new EmailValidatorStub()
-}
 
 type SutTypes = {
   sut: EmailValidation
-  emailValidatorStub: EmailValidator
+  emailValidatorStub: EmailValidatorStub
 }
 
 const makeSut = (): SutTypes => {
-  const emailValidatorStub = makeEmailValidator()
+  const emailValidatorStub = new EmailValidatorStub()
   const sut = new EmailValidation('email', emailValidatorStub)
 
   return {
@@ -32,7 +23,7 @@ describe('Email Validation', () => {
     const { sut, emailValidatorStub } = makeSut()
     jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false)
 
-    const error = sut.validate({ email: 'any_email@mail.com' })
+    const error = sut.validate({ email: faker.random.word() })
 
     expect(error).toEqual(new InvalidParamError('email'))
   })
@@ -41,8 +32,9 @@ describe('Email Validation', () => {
     const { sut, emailValidatorStub } = makeSut()
     const isValidSpy = jest.spyOn(emailValidatorStub, 'isValid')
 
-    sut.validate({ email: 'any_email@mail.com' })
-    expect(isValidSpy).toHaveBeenCalledWith('any_email@mail.com')
+    const email = faker.internet.email()
+    sut.validate({ email: email })
+    expect(isValidSpy).toHaveBeenCalledWith(email)
   })
 
   test('Should throw if EmailValidator throws', () => {

@@ -1,4 +1,5 @@
 import request from 'supertest'
+import faker from 'faker'
 import app from '@/main/config/app'
 
 describe('Body Parser Middleware', () => {
@@ -7,9 +8,11 @@ describe('Body Parser Middleware', () => {
       res.send(req.body)
     })
 
+    const name = faker.name.findName()
+
     await request(app)
       .post('/test_body_parser')
-      .send({ name: 'Samuel' })
-      .expect({ name: 'Samuel' })
+      .send({ name: name })
+      .expect({ name: name })
   })
 })

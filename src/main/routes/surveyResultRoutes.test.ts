@@ -1,18 +1,20 @@
+import request from 'supertest'
+import faker from 'faker'
 import { sign } from 'jsonwebtoken'
 import { Collection } from 'mongodb'
-import request from 'supertest'
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongoHelper'
 import app from '@/main/config/app'
 import env from '@/main/config/env'
+import { mockAddSurveyParams } from '@/domain/test'
 
 let surveyCollection: Collection
 let accountCollection: Collection
 
-const makeAccessToken = async (): Promise<string> => {
+const mockAccessToken = async (): Promise<string> => {
   const res = await accountCollection.insertOne({
-    name: 'Samuel',
-    email: 'samuel.pereira@catijr.com.br',
-    password: '123'
+    name: faker.name.findName(),
+    email: faker.internet.email(),
+    password: faker.internet.password()
   })
   const id = res.ops[0]._id
   const accessToken = sign({ id }, env.jwtSecret)
@@ -54,23 +56,15 @@ describe('SurveyResult Routes', () => {
     })
 
     test('Should return 200 on save survey whit accessToken', async () => {
-      const res = await surveyCollection.insertOne({
-        question: 'Question',
-        answers: [{
-          answer: 'Answer 1',
-          image: 'http://image-name.com'
-        }, {
-          answer: 'Answer 2'
-        }],
-        date: new Date()
-      })
+      const survey = mockAddSurveyParams()
+      const res = await surveyCollection.insertOne(survey)
       const id: string = res.ops[0]._id
-      const accessToken = await makeAccessToken()
+      const accessToken = await mockAccessToken()
       await request(app)
         .put(`/api/surveys/${id}/results`)
         .set('x-access-token', accessToken)
         .send({
-          answer: 'Answer 1'
+          answer: survey.answers[0].answer
         })
         .expect(200)
     })

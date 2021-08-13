@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+import faker from 'faker'
 import { JwtAdapter } from './jwtAdapter'
 
 jest.mock('jsonwebtoken', () => ({
@@ -10,32 +11,44 @@ jest.mock('jsonwebtoken', () => ({
   }
 }))
 
-const makeSut = (): JwtAdapter => {
-  return new JwtAdapter('secret')
+type SutTypes = {
+  sut: JwtAdapter
+  secret: string
+}
+
+const makeSut = (): SutTypes => {
+  const secret = faker.random.word()
+  const sut = new JwtAdapter(secret)
+
+  return {
+    sut,
+    secret
+  }
 }
 
 describe('Jwt Adapter', () => {
   describe('sign()', () => {
     test('Should call sign with correct values', async () => {
-      const sut = makeSut()
+      const { sut, secret } = makeSut()
       const signSpy = jest.spyOn(jwt, 'sign')
-      await sut.encrypt('any_id')
-      expect(signSpy).toHaveBeenCalledWith({ id: 'any_id' }, 'secret')
+      const id = faker.datatype.uuid()
+      await sut.encrypt(id)
+      expect(signSpy).toHaveBeenCalledWith({ id }, secret)
     })
 
     test('Should return a token on sign success', async () => {
-      const sut = makeSut()
-      const accessToken = await sut.encrypt('any_id')
+      const { sut } = makeSut()
+      const accessToken = await sut.encrypt(faker.datatype.uuid())
       expect(accessToken).toBe('any_token')
     })
 
     test('Should throw if sign throws', async () => {
-      const sut = makeSut()
+      const { sut } = makeSut()
       jest.spyOn(jwt, 'sign').mockImplementationOnce(() => {
         throw new Error()
       })
 
-      const promise = sut.encrypt('any_id')
+      const promise = sut.encrypt(faker.datatype.uuid())
 
       await expect(promise).rejects.toThrow()
     })
@@ -43,26 +56,27 @@ describe('Jwt Adapter', () => {
 
   describe('verify()', () => {
     test('Should call verify with correct values', async () => {
-      const sut = makeSut()
+      const { sut, secret } = makeSut()
       const verifySpy = jest.spyOn(jwt, 'verify')
-      await sut.decrypt('any_token')
-      expect(verifySpy).toHaveBeenCalledWith('any_token', 'secret')
+      const token = faker.datatype.uuid()
+      await sut.decrypt(token)
+      expect(verifySpy).toHaveBeenCalledWith(token, secret)
     })
 
     test('Should return a value on verify success', async () => {
-      const sut = makeSut()
-      const value = await sut.decrypt('any_token')
+      const { sut } = makeSut()
+      const token = faker.datatype.uuid()
+      const value = await sut.decrypt(token)
       expect(value).toBe('any_value')
     })
 
     test('Should throw if verify throws', async () => {
-      const sut = makeSut()
+      const { sut } = makeSut()
       jest.spyOn(jwt, 'verify').mockImplementationOnce(() => {
         throw new Error()
       })
-
-      const promise = sut.decrypt('any_id')
-
+      const token = faker.datatype.uuid()
+      const promise = sut.decrypt(token)
       await expect(promise).rejects.toThrow()
     })
   })

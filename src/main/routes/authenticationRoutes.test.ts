@@ -1,6 +1,7 @@
+import request from 'supertest'
+import faker from 'faker'
 import { hash } from 'bcrypt'
 import { Collection } from 'mongodb'
-import request from 'supertest'
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongoHelper'
 import app from '@/main/config/app'
 
@@ -22,13 +23,14 @@ describe('Authentication Routes', () => {
 
   describe('POST /signup', () => {
     test('Should return 200 on signup', async () => {
+      const password = faker.internet.password()
       await request(app)
         .post('/api/signup')
         .send({
-          name: 'Samuel',
-          email: 'samuel.pereira@catijr.com.br',
-          password: '123',
-          passwordConfirmation: '123'
+          name: faker.name.findName(),
+          email: faker.internet.email(),
+          password: password,
+          passwordConfirmation: password
         })
         .expect(200)
     })
@@ -36,16 +38,19 @@ describe('Authentication Routes', () => {
 
   describe('POST /login', () => {
     test('Should return 200 on login', async () => {
+      const email = faker.internet.email()
+      const password = faker.internet.password()
       await accountCollection.insertOne({
-        name: 'Samuel',
-        email: 'samuel.pereira@catijr.com.br',
-        password: await hash('123', 12)
+        name: faker.name.findName(),
+        email: email,
+        password: await hash(password, 12)
       })
+
       await request(app)
         .post('/api/login')
         .send({
-          email: 'samuel.pereira@catijr.com.br',
-          password: '123'
+          email: email,
+          password: password
         })
         .expect(200)
     })
@@ -54,8 +59,8 @@ describe('Authentication Routes', () => {
       await request(app)
         .post('/api/login')
         .send({
-          email: 'samuel.pereira@catijr.com.br',
-          password: '123'
+          email: faker.internet.email(),
+          password: faker.internet.password()
         })
         .expect(401)
     })
