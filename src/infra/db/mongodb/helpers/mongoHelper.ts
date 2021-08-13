@@ -31,5 +31,9 @@ export const MongoHelper = {
       id: _id,
       ...collectionWithoutId
     }
+  },
+
+  mapList (collection: any[]): any[] {
+    return collection.map(coll => MongoHelper.map(coll))
   }
 }
