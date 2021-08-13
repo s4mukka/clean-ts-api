@@ -1,4 +1,4 @@
-import { DbLoadAccountByToken } from '@/data/useCase/loadAccountByToken/dbLoadAccountByToken'
+import { DbLoadAccountByToken } from '@/data/useCases/loadAccountByToken/dbLoadAccountByToken'
 import { LoadAccountByToken } from '@/domain/useCases/loadAccountByToken'
 import { JwtAdapter } from '@/infra/criptography/jwtAdapter/jwtAdapter'
 import { AccountMongoRepository } from '@/infra/db/mongodb/account/accountMongoRepository'
