@@ -1,8 +1,8 @@
 import MockDate from 'mockdate'
-import { AddSurveyModel, AddSurveyRepository } from './protocols'
+import { AddSurveyParams, AddSurveyRepository } from './protocols'
 import { DbAddSurvey } from './dbAddSurvey'
 
-const makeFakeSurveyData = (): AddSurveyModel => ({
+const makeFakeSurveyData = (): AddSurveyParams => ({
   question: 'any_question',
   answers: [{
     image: 'any_image',
@@ -13,7 +13,7 @@ const makeFakeSurveyData = (): AddSurveyModel => ({
 
 const makeAddSurveyRepository = (): AddSurveyRepository => {
   class AddSurveyRepositoryStub implements AddSurveyRepository {
-    async add (data: AddSurveyModel): Promise<void> {
+    async add (data: AddSurveyParams): Promise<void> {
       return new Promise(resolve => resolve(null))
     }
   }
