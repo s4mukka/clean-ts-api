@@ -1,7 +1,6 @@
-import { AuthenticationModel } from '@/domain/useCases/authentication'
 import { MissingParamError } from '@/presentation/errors'
 import { badRequest, ok, serverError, unauthorized } from '@/presentation/helpers/http/httpHelper'
-import { HttpRequest, Authentication, Validation } from './protocols'
+import { HttpRequest, Authentication, Validation, AuthenticationModel } from './protocols'
 import { LoginController } from './login'
 
 const makeValidation = (): Validation => {

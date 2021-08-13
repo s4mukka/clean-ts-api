@@ -1,4 +1,4 @@
-import { SaveSurveyResultModel, SaveSurveyResultRepository, SurveyResultModel } from '@/data/useCases/saveSurveyResult/protocols'
+import { SaveSurveyResultModel, SaveSurveyResultRepository, SurveyResultModel } from '@/data/useCases/surveyResult/saveSurveyResult/protocols'
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongoHelper'
 
 export class SurveyResultMongoRepository implements SaveSurveyResultRepository {

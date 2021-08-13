@@ -1,5 +1,5 @@
 export * from '@/domain/models/account'
-export * from '@/domain/useCases/addAccount'
+export * from '@/domain/useCases/account/addAccount'
 export * from '@/data/protocols/criptography/hasher'
 export * from '@/data/protocols/db/account/addAccountRepository'
 export * from '@/data/protocols/db/account/loadAccountByEmailRepository'
