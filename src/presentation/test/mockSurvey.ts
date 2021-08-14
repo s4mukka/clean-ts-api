@@ -6,7 +6,7 @@ import { LoadSurveyById } from '@/domain/useCases/survey/loadSurveyById'
 
 export class AddSurveyStub implements AddSurvey {
   async add (add: AddSurveyParams): Promise<void> {
-    return new Promise(resolve => resolve(null))
+    return Promise.resolve(null)
   }
 }
 
@@ -14,13 +14,13 @@ export class LoadSurveysStub implements LoadSurveys {
   surveys: SurveyModel[] = null
   async load (): Promise<SurveyModel[]> {
     this.surveys = mockSurveysModel()
-    return new Promise(resolve => resolve(this.surveys))
+    return Promise.resolve(this.surveys)
   }
 }
 
 export class LoadSurveyByIdStub implements LoadSurveyById {
   survey: SurveyModel = mockSurveyModel()
   async loadById (id: string): Promise<SurveyModel> {
-    return new Promise(resolve => resolve(this.survey))
+    return Promise.resolve(this.survey)
   }
 }

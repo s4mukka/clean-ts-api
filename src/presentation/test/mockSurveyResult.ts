@@ -6,6 +6,6 @@ export class SaveSurveyResultStub implements SaveSurveyResult {
   surveyResult: SurveyResultModel = null
   async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
     this.surveyResult = mockSurveyResultModel()
-    return new Promise(resolve => resolve(this.surveyResult))
+    return Promise.resolve(this.surveyResult)
   }
 }

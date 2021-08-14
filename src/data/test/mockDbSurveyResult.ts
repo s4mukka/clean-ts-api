@@ -6,6 +6,6 @@ import { mockSurveyResultModel } from '@/domain/test/mockSurveyResult'
 export class SaveSurveyResultRepositoryStub implements SaveSurveyResultRepository {
   surveyResult: SurveyResultModel = mockSurveyResultModel()
   async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
-    return new Promise(resolve => resolve(this.surveyResult))
+    return Promise.resolve(this.surveyResult)
   }
 }

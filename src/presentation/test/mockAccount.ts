@@ -8,7 +8,7 @@ import { LoadAccountByToken } from '@/domain/useCases/account/loadAccountByToken
 export class AddAccountStub implements AddAccount {
   account: AccountModel = mockAccountModel()
   async add (account: AddAccountParams): Promise<AccountModel> {
-    return new Promise(resolve => resolve(this.account))
+    return Promise.resolve(this.account)
   }
 }
 
@@ -16,13 +16,13 @@ export class AuthenticationStub implements Authentication {
   token: string = null
   async auth (authentication: AuthenticationParams): Promise<string> {
     this.token = faker.datatype.uuid()
-    return new Promise(resolve => resolve(this.token))
+    return Promise.resolve(this.token)
   }
 }
 
 export class LoadAccountByTokenStub implements LoadAccountByToken {
   account: AccountModel = mockAccountModel()
   async load (accessToken: string): Promise<AccountModel> {
-    return new Promise(resolve => resolve(this.account))
+    return Promise.resolve(this.account)
   }
 }

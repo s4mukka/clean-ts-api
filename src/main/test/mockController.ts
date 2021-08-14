@@ -6,6 +6,6 @@ import { Controller, HttpRequest, HttpResponse } from '@/presentation/protocols'
 export class ControllerStub implements Controller {
   account: AccountModel = mockAccountModel()
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    return new Promise(resolve => resolve(ok(this.account)))
+    return Promise.resolve(ok(this.account))
   }
 }

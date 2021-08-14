@@ -68,7 +68,7 @@ describe('LogController Decorator', () => {
     const logSpy = jest.spyOn(logErrorRepositoryStub, 'logError')
     const stack = faker.random.words()
     const serverError = mockServerError(stack)
-    jest.spyOn(controllerStub, 'handle').mockReturnValueOnce(new Promise(resolve => resolve(serverError)))
+    jest.spyOn(controllerStub, 'handle').mockReturnValueOnce(Promise.resolve(serverError))
 
     await sut.handle(mockRequest())
 

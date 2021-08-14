@@ -12,26 +12,26 @@ export class AddAccountRepositoryStub implements AddAccountRepository {
   async add (accountData: AddAccountParams): Promise<AccountModel> {
     const account: AccountModel = { id: faker.datatype.uuid(), ...accountData }
     this.account = account
-    return new Promise(resolve => resolve(account))
+    return Promise.resolve(account)
   }
 }
 
 export class LoadAccountByEmailRepositoryStub implements LoadAccountByEmailRepository {
   account: AccountModel = mockAccountModel()
   async loadByEmail (email: string): Promise<AccountModel> {
-    return new Promise(resolve => resolve(this.account))
+    return Promise.resolve(this.account)
   }
 }
 
 export class LoadAccountByTokenRepositoryStub implements LoadAccountByTokenRepository {
   account: AccountModel = mockAccountModel()
   async loadByToken (token: string, role?: string): Promise<AccountModel> {
-    return new Promise(resolve => resolve(this.account))
+    return Promise.resolve(this.account)
   }
 }
 
 export class UpdateAccessTokenRepositoryStub implements UpdateAccessTokenRepository {
   async updateAccessToken (id: string, token: string): Promise<void> {
-    return new Promise(resolve => resolve())
+    return Promise.resolve()
   }
 }
