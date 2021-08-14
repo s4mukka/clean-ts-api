@@ -1,6 +1,7 @@
 export * from './account'
 export * from './error'
 export * from './loginParams'
+export * from './signUpParams'
 export * from './survey'
 export * from './surveys'
 export * from './surveyAnswer'
