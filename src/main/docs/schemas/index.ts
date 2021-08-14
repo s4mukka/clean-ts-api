@@ -1,3 +1,7 @@
 export * from './account'
 export * from './error'
 export * from './loginParams'
+export * from './survey'
+export * from './surveys'
+export * from './surveyAnswer'
+export * from './apiKeyAuth'
