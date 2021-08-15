@@ -1,6 +1,7 @@
 import faker from 'faker'
+import { throwError } from '@/domain/test'
 import { LoadSurveyByIdStub } from '@/presentation/test'
-import { forbidden } from '@/presentation/helpers/http/httpHelper'
+import { forbidden, serverError } from '@/presentation/helpers/http/httpHelper'
 import { InvalidParamError } from '@/presentation/errors'
 import { HttpRequest } from './protocols'
 import { LoadSurveyResultController } from './loadSurveyResult'
@@ -40,5 +41,12 @@ describe('LoadSurveyResult Controller', () => {
     jest.spyOn(loadSurveyByIdStub, 'loadById').mockReturnValueOnce(Promise.resolve(null))
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(forbidden(new InvalidParamError('surveyId')))
+  })
+
+  test('Should return 500 if LoadSurveyById throws', async () => {
+    const { sut, loadSurveyByIdStub } = makeSut()
+    jest.spyOn(loadSurveyByIdStub, 'loadById').mockImplementationOnce(throwError)
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(serverError(new Error()))
   })
 })
