@@ -1,6 +1,7 @@
 import faker from 'faker'
 import { LoadSurveyByIdRepositoryStub, LoadSurveyResultRepositoryStub } from '@/data/test'
 import { throwError } from '@/domain/test'
+import { SurveyResultModel } from './protocols'
 import { DbLoadSurveyResult } from './dbLoadSurveyResult'
 
 type SutTypes = {
@@ -44,6 +45,21 @@ describe('DbLoadSurveyResult UseCase', () => {
     const surveyId = faker.datatype.uuid()
     await sut.load(surveyId)
     expect(loadByIdSpy).toHaveBeenCalledWith(surveyId)
+  })
+
+  test('Should return SurveyResultModel with all answers count 0 if LoadSurveyResultRepository returns null', async () => {
+    const { sut, loadSurveyResultRepositoryStub, loadSurveyByIdRepositoryStub } = makeSut()
+    jest.spyOn(loadSurveyResultRepositoryStub, 'loadBySurveyId').mockReturnValueOnce(Promise.resolve(null))
+    const surveyId = faker.datatype.uuid()
+    const surveyResult = await sut.load(surveyId)
+    const survey = loadSurveyByIdRepositoryStub.survey
+    const surveyResultExpect: SurveyResultModel = {
+      surveyId: survey.id,
+      question: survey.question,
+      date: survey.date,
+      answers: survey.answers.map(answer => ({ ...answer, count: 0, percent: 0 }))
+    }
+    expect(surveyResult).toEqual(surveyResultExpect)
   })
 
   test('Should return SurveyResultModel on success', async () => {
