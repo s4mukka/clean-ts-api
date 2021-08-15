@@ -3,10 +3,22 @@ import { SurveyResultModel } from '@/domain/models/surveyResult'
 import { SaveSurveyResultParams } from '@/domain/useCases/surveyResult/saveSurveyResult'
 
 export const mockSurveyResultModel = (): SurveyResultModel => ({
-  id: faker.datatype.uuid(),
-  accountId: faker.datatype.uuid(),
   surveyId: faker.datatype.uuid(),
-  answer: faker.random.word(),
+  question: faker.random.words(),
+  answers: [
+    {
+      image: faker.image.image(),
+      answer: faker.random.word(),
+      count: faker.datatype.number({ min: 0, max: 1000 }),
+      percent: faker.datatype.number({ min: 0, max: 100 })
+    },
+    {
+      image: faker.image.image(),
+      answer: faker.random.word(),
+      count: faker.datatype.number({ min: 0, max: 1000 }),
+      percent: faker.datatype.number({ min: 0, max: 100 })
+    }
+  ],
   date: new Date()
 })
 
