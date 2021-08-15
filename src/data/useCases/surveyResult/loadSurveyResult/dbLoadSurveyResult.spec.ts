@@ -1,5 +1,5 @@
-import { LoadSurveyResultRepositoryStub } from '@/data/test'
 import faker from 'faker'
+import { LoadSurveyResultRepositoryStub } from '@/data/test'
 import { DbLoadSurveyResult } from './dbLoadSurveyResult'
 
 type SutTypes = {
