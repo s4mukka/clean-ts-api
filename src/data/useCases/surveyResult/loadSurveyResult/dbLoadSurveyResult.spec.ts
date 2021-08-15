@@ -1,5 +1,6 @@
 import faker from 'faker'
 import { LoadSurveyResultRepositoryStub } from '@/data/test'
+import { throwError } from '@/domain/test'
 import { DbLoadSurveyResult } from './dbLoadSurveyResult'
 
 type SutTypes = {
@@ -24,5 +25,12 @@ describe('DbLoadSurveyResult UseCase', () => {
     const surveyId = faker.datatype.uuid()
     await sut.load(surveyId)
     expect(loadBySurveyIdSpy).toHaveBeenCalledWith(surveyId)
+  })
+
+  test('Should throw if LoadSurveyResultRepository throws', async () => {
+    const { sut, loadSurveyResultRepositoryStub } = makeSut()
+    jest.spyOn(loadSurveyResultRepositoryStub, 'loadBySurveyId').mockImplementationOnce(throwError)
+    const promise = sut.load(faker.datatype.uuid())
+    await expect(promise).rejects.toThrow()
   })
 })
