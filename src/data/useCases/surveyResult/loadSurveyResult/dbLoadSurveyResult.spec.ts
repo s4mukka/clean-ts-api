@@ -33,4 +33,10 @@ describe('DbLoadSurveyResult UseCase', () => {
     const promise = sut.load(faker.datatype.uuid())
     await expect(promise).rejects.toThrow()
   })
+
+  test('Should return SurveyResultModel on success', async () => {
+    const { sut, loadSurveyResultRepositoryStub } = makeSut()
+    const surveyResult = await sut.load(faker.datatype.uuid())
+    expect(surveyResult).toEqual(loadSurveyResultRepositoryStub.surveyResult)
+  })
 })
